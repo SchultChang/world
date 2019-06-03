@@ -105,3 +105,16 @@ D:\DoAn\FaceRecProOV\obj\x86\Debug\MultiFaceRec.exe
 D:\DoAn\FaceRecProOV\obj\x86\Debug\MultiFaceRec.pdb
 D:\DoAn\FaceRecognition\obj\x86\Debug\MultiFaceRec.exe
 D:\DoAn\FaceRecognition\obj\x86\Debug\MultiFaceRec.pdb
+D:\Code Projects\C#\Friend projects\DATN_2019\obj\x86\Debug\MultiFaceRec.csprojAssemblyReference.cache
+D:\Code Projects\C#\Friend projects\DATN_2019\obj\x86\Debug\MultiFaceRec.FrmPrincipal.resources
+D:\Code Projects\C#\Friend projects\DATN_2019\obj\x86\Debug\MultiFaceRec.Properties.Resources.resources
+D:\Code Projects\C#\Friend projects\DATN_2019\obj\x86\Debug\MultiFaceRec.csproj.GenerateResource.cache
+D:\Code Projects\C#\Friend projects\DATN_2019\obj\x86\Debug\MultiFaceRec.csproj.CoreCompileInputs.cache
+D:\Code Projects\C#\Friend projects\DATN_2019\obj\x86\Debug\MultiFaceRec.exe
+D:\Code Projects\C#\Friend projects\DATN_2019\obj\x86\Debug\MultiFaceRec.pdb
+D:\Code Projects\C#\Friend projects\DATN_2019\bin\Debug\MultiFaceRec.exe
+D:\Code Projects\C#\Friend projects\DATN_2019\bin\Debug\MultiFaceRec.pdb
+D:\Code Projects\C#\Friend projects\DATN_2019\bin\Debug\Emgu.CV.xml
+D:\Code Projects\C#\Friend projects\DATN_2019\bin\Debug\Emgu.CV.UI.xml
+D:\Code Projects\C#\Friend projects\DATN_2019\bin\Debug\Emgu.Util.xml
+D:\Code Projects\C#\Friend projects\DATN_2019\obj\x86\Debug\MultiFaceRec.csproj.CopyComplete

@@ -131,15 +131,51 @@ namespace MultiFaceRec
 
         private void button2_Click(object sender, System.EventArgs e)
         {
+            uploadFileIntoSystem();
+        }
+
+        private void button4_Click(Object sender, EventArgs e)
+        {
             try
             {
-                //Trained face counter
+                using (var folderDialog = new FolderBrowserDialog())
+                {
+                    folderDialog.SelectedPath = @"D:\Code Projects\C#\Friend projects\DATN_2019";
+                    DialogResult result = folderDialog.ShowDialog();
+
+                    if (result == DialogResult.OK && !string.IsNullOrEmpty(folderDialog.SelectedPath))
+                    {
+                        string[] temp = folderDialog.SelectedPath.Split('\\');
+                        string personName = temp[temp.Length - 1];
+                        //Console.WriteLine(personName);
+
+                        foreach (string imagePath in Directory.GetFiles(folderDialog.SelectedPath))
+                        {
+                            this.imgInput = new Image<Bgr, byte>(imagePath);
+                            //Console.WriteLine(imagePath);
+                            this.uploadFileIntoSystem(personName);
+    }
+}
+                }
+            } catch (Exception)
+            {
+                Console.WriteLine("Stop doing something stupid");
+            }
+        }
+
+        private void uploadFileIntoSystem(string label = null)
+        {
+            try
+            { 
+            //Trained face counter
                 ContTrain = ContTrain + 1;
 
                 //Get a gray frame from capture device
 
                 //gray = grabber.QueryGrayFrame().Resize(320, 240, Emgu.CV.CvEnum.INTER.CV_INTER_CUBIC);
-               gray = imgInput.Convert<Gray, Byte>().Resize(320, 240, Emgu.CV.CvEnum.INTER.CV_INTER_CUBIC);
+                
+                imgInput = imgInput.Resize(320, 240, Emgu.CV.CvEnum.INTER.CV_INTER_CUBIC);
+                gray = imgInput.Convert<Gray, Byte>();
 
                 //Face Detector
                 //DetectHaarCascade(HaarCascade, Double, Int32, HAAR_DETECTION_TYPE, Size)
@@ -149,41 +185,57 @@ namespace MultiFaceRec
                 10,
                 Emgu.CV.CvEnum.HAAR_DETECTION_TYPE.DO_CANNY_PRUNING,
                 new Size(20, 20));
-
-                //Action for each element detected
+                Console.WriteLine("Hello world");
+                //Action for each element detected                
                 foreach (MCvAvgComp f in facesDetected[0])
                 {
-                    TrainedFace = currentFrame.Copy(f.rect).Convert<Gray, byte>();
+                    Console.WriteLine(f.rect);
+                    TrainedFace = imgInput.Copy(f.rect).Convert<Gray, byte>();
+                    
                     break;
                 }
+                Console.WriteLine("Hello world");
 
                 //resize face detected image for force to compare the same size with the 
                 //test image with cubic interpolation type method
-                TrainedFace = result.Resize(100, 100, Emgu.CV.CvEnum.INTER.CV_INTER_CUBIC);
+                TrainedFace = TrainedFace.Resize(100, 100, Emgu.CV.CvEnum.INTER.CV_INTER_CUBIC);
                 trainingImages.Add(TrainedFace);
-                labels.Add(textBox1.Text);
+                if (label.Equals(null))
+                {
+                    labels.Add(textBox1.Text);
+                }
+                else
+                {
+                    labels.Add(label);
+                }
+                Console.WriteLine("Hello world");
 
                 //Show face added in gray scale
                 imageBox1.Image = TrainedFace;
 
                 //Write the number of triained faces in a file text for further load
-                File.WriteAllText(Application.StartupPath + "/TrainedFaces/TrainedLabels.txt", trainingImages.ToArray().Length.ToString() + "%");
+                //Console.WriteLine(Application.StartupPath + "\\TrainedFaces\\TrainedLabels.txt");
+                //Console.WriteLine(trainingImages.ToArray().Length);
+                File.WriteAllText(Application.StartupPath + "\\TrainedFaces\\TrainedLabels.txt", trainingImages.ToArray().Length.ToString() + "%");
+                Console.WriteLine("Hello world");
 
+                //Console.WriteLine("File writen");
                 //Write the labels of triained faces in a file text for further load
                 for (int i = 1; i < trainingImages.ToArray().Length + 1; i++)
                 {
-                    trainingImages.ToArray()[i - 1].Save(Application.StartupPath + "/TrainedFaces/face" + i + ".bmp");
-                    File.AppendAllText(Application.StartupPath + "/TrainedFaces/TrainedLabels.txt", labels.ToArray()[i - 1] + "%");
+                    trainingImages.ToArray()[i - 1].Save(Application.StartupPath + "\\TrainedFaces\\face" + i + ".bmp");
+                    File.AppendAllText(Application.StartupPath + "\\TrainedFaces\\TrainedLabels.txt", labels.ToArray()[i - 1] + "%");
                 }
+                //Console.WriteLine("hello");
 
                 MessageBox.Show(textBox1.Text + "´s face detected and added ", "Training OK", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-            catch
+            } catch (Exception)
             {
                 MessageBox.Show("Enable the face detection first", "Training Fail", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
         }
-        void FrameImage(object sender, EventArgs e)
+
+    void FrameImage(object sender, EventArgs e)
         {
             label3.Text = "0";
             NamePersons.Add("");
@@ -196,11 +248,11 @@ namespace MultiFaceRec
 
             //Face Detector
             MCvAvgComp[][] facesDetected = gray.DetectHaarCascade(
-          face,
-          1.2,
-          10,
-          Emgu.CV.CvEnum.HAAR_DETECTION_TYPE.DO_CANNY_PRUNING,
-          new Size(20, 20));
+            face,
+            1.2,
+            10,
+            Emgu.CV.CvEnum.HAAR_DETECTION_TYPE.DO_CANNY_PRUNING,
+            new Size(20, 20));
 
             //Action for each element detected
             foreach (MCvAvgComp f in facesDetected[0])
